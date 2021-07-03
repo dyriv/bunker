@@ -2,19 +2,12 @@
 from pathlib import Path
 from random import choice, randint
 from itertools import chain
-from bunker import cleaner
-
-
-# ВАЖНО!!!
-# если запускать код с этого же файла нужно в начало каждого пути дописать ../ (шаг назад на одну директорию)
-# если запускать код с файла bot_main.py - ничего дописывать не надо :)
+from cleaner import clear_card
 
 
 # генерируем карту игрока
 def get_card():
     global pl_card
-
-    cleaner.clear_single_card()
 
     pl_dir = 'src/player/'
 
@@ -82,23 +75,11 @@ def get_card():
                 i += 1
 
 
-# срабатывает когда пользователь нажимает на "Карта игрока"
-def single_card():
-    global pl_card
-
-    cleaner.clear_single_card()
-
-    get_card()
-
-    with open('files/player_card.txt', 'w', encoding='utf-8') as file:
-        file.write(f''' - - - Карта игрока - - - \n{''.join(pl_card)}''')
-
-
 # записуем все карты игроков в файлы
 def write_card(max_pl):
     global pl_card
 
-    cleaner.clear_card()
+    clear_card()  # функция импортированная из файла cleaner.py
 
     player_list = range(1, (int(max_pl) + 1))  # количество играков
 
@@ -119,7 +100,8 @@ def write_card(max_pl):
         if player == sec_rel:
             relative = f'Игрок под номером "{first_rel}" ваш родственник\n'
 
-        with open('files/players/player_' + str(player) + '.txt', 'w', encoding='utf-8') as file:
+        with open('data/player_' + str(player) + '.txt', 'w', encoding='utf-8') as file:
             file.write(f''' - - - Карта игрока #{str(player)} - - - \n{''.join(pl_card)}{relative}''')
 
-# write_card()
+
+# write_card(6)

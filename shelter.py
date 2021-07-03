@@ -3,11 +3,7 @@
 from pathlib import Path, WindowsPath
 from random import choice, randint
 from datetime import date
-from bunker import cleaner
-
-# ВАЖНО!!!
-# если запускать код с этого же файла нужно в начало каждого пути дописать ../ (шаг назад на одну директорию)
-# если запускать код с файла bot_main.py - ничего дописывать не надо :)
+from cleaner import clear_bun
 
 on_mars = None
 
@@ -15,7 +11,7 @@ on_mars = None
 def get_bunker():
     global on_mars
 
-    cleaner.clear_bun()
+    clear_bun()  # функция импортированная из файла cleaner.py
 
     bun_dir = 'src/bunker/'
     there_is = []
@@ -52,7 +48,8 @@ def get_bunker():
         # что бы узнать текущий год игрока импортируем date из datetime и используем функцию date.today().year
         can_leave = f'Вы сможете выйти наружу в {date.today().year + randint(5, 100)} году'
 
-    with open('files/shelter.txt', 'w', encoding='utf-8') as file:
+    with open('data/shelter.txt', 'w', encoding='utf-8') as file:
         file.write(f''' - - - Убежище - - - \n{size}\n{can_leave}\nВ бункере есть: {', '.join(there_is)}''')
+
 
 # get_bunker()
